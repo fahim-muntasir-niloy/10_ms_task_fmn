@@ -1,0 +1,17 @@
+langchain
+langchain-core
+langchain-google-genai
+langchain-ollama
+langgraph
+supabase
+fastapi
+uvicorn
+rich
+psycopg2-binary
+langchain-postgres
+psycopg-binary
+langchain-community
+python-dotenv
+tqdm
+pytesseract 
+pillow
