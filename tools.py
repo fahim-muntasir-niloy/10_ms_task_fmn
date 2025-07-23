@@ -27,7 +27,7 @@ def hsc_kb(query: str):
     )
 
     retriever = vector_store.as_retriever(
-        search_type="similarity", search_kwargs={"k": 10}
+        search_type="similarity", search_kwargs={"k": 5}
     )
     docs = retriever.invoke(query)
 
