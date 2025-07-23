@@ -14,5 +14,5 @@ langchain-community
 python-dotenv
 pytesseract 
 pillow
-colorama 
-pyfiglet
+streamlit
+httpx
