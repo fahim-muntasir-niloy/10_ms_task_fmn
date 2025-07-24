@@ -3,7 +3,7 @@
 A conversational AI assistant for HSC Bangla First Paper, answering questions using a knowledge base extracted from the official textbook. It have `thread based memory support`, to keep the context of the current chat (short term memory) through out.
 
 **Watch a quick demo of HSC Bangla Bot in action!**
-[![Watch the demo](https://img.youtube.com/vi/3Em5Sq18mjg/2.jpg)](https://www.youtube.com/watch?v=3Em5Sq18mjg)
+[![Watch the demo](https://img.youtube.com/vi/3Em5Sq18mjg/0.jpg)](https://www.youtube.com/watch?v=3Em5Sq18mjg)
 
 ## 🧮 Setup Guide
 
