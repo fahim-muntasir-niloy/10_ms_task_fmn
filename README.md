@@ -1,11 +1,18 @@
-# HSC Bangla Bot
 
-A conversational AI assistant for HSC Bangla First Paper, answering questions using a knowledge base extracted from the official textbook. It have `thread based memory support`, to keep the context of the current chat (short term memory) through out.
+    ██╗  ██╗███████╗ ██████╗    ██████╗  █████╗ ███╗   ██╗ ██████╗ ██╗      █████╗     ██████╗  ██████╗ ████████╗
+    ██║  ██║██╔════╝██╔════╝    ██╔══██╗██╔══██╗████╗  ██║██╔════╝ ██║     ██╔══██╗    ██╔══██╗██╔═══██╗╚══██╔══╝
+    ███████║███████╗██║         ██████╔╝███████║██╔██╗ ██║██║  ███╗██║     ███████║    ██████╔╝██║   ██║   ██║   
+    ██╔══██║╚════██║██║         ██╔══██╗██╔══██║██║╚██╗██║██║   ██║██║     ██╔══██║    ██╔══██╗██║   ██║   ██║   
+    ██║  ██║███████║╚██████╗    ██████╔╝██║  ██║██║ ╚████║╚██████╔╝███████╗██║  ██║    ██████╔╝╚██████╔╝   ██║   
+    ╚═╝  ╚═╝╚══════╝ ╚═════╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝    ╚═════╝  ╚═════╝    ╚═╝   
+
+`A conversational AI Agent with memory` for HSC Bangla First Paper, answering questions using a knowledge base extracted from the official textbook. It have `thread based memory support`, to keep the context of the current chat (short term memory) through out. The pdf document corpus is stored in Postgres vector database (long term memory).
 
 **Watch a quick demo of HSC Bangla Bot in action!**
 [![Watch the demo](https://img.youtube.com/vi/3Em5Sq18mjg/0.jpg)](https://www.youtube.com/watch?v=3Em5Sq18mjg)
 
 ## 🧮 Setup Guide
+0. **Setup Python**: `Python >= 3.12` is recommended
 
 1. **Clone the repository** and install dependencies:
    ```bash
@@ -18,7 +25,8 @@ A conversational AI assistant for HSC Bangla First Paper, answering questions us
    - `OLLAMA_EMBEDDING_URL` (Ollama embedding server URL)
    - `LANGSMITH_API_KEY` (LangSmith API key, optional for tracing)
 
-3. **Prepare the knowledge base** (if not already done):
+3. **Prepare the knowledge base** (Done already):
+   - Install and Setup Tesseract (Bangla) and add to system path. 
    - Place the HSC Bangla 1st Paper PDF in `pdfs/HSC26-Bangla1st-Paper.pdf`.
    - Run:
      ```bash
@@ -38,9 +46,11 @@ A conversational AI assistant for HSC Bangla First Paper, answering questions us
 
 
 ## 🛠️ Used Tools, Libraries, Packages
-
+Models:
 - **Large Language Model:** Gemini 2.5 Flash
-- **Embedding Model:** BAAI-BGE-M3
+- **Embedding Model:** BAAI-BGE-M3 (vector Dimension: 1024)
+
+Libraries and Packages:
 - **LangChain** (core, community, google-genai, ollama, postgres)
 - **LangGraph** (Agent building with memory)
 - **Supabase** (Postgres vector store)
@@ -60,7 +70,7 @@ See `requirements.txt` for full list.
 ## Sample Queries & Outputs
 
 **Bangla Example:**
-- **Query:** `গল্পের মূল চরিত্র কারা?`
+- **Query:** `অপরিচিতা গল্পের মূল চরিত্র কারা?`
 - **Output:** 
 `"অপরিচিতা" গল্পের মূল চরিত্র হলো অনুপম। সে পিতৃহীন এবং তার মা ও মামার ওপর নির্ভরশীল। অনুপম শিক্ষিত হলেও তার নিজস্ব সিদ্ধান্ত নেওয়ার ক্ষমতা নেই এবং সে ব্যক্তিত্বহীন। গল্পের অন্যান্য গুরুত্বপূর্ণ চরিত্রগুলো হলো অনুপমের মামা (যিনি যৌতুকলোভী), শম্ভুনাথ সেন (কন্যার পিতা) এবং কল্যাণী (অনুপমের বাগদত্তা)।`
 
@@ -131,7 +141,7 @@ A: I chose a **character-based chunking** strategy using `RecursiveCharacterText
 
 **Q: What embedding model did you use? Why did you choose it? How does it capture the meaning of the text?**
 
-A: The embedding model used is `BAAI-BGE-M3` via Ollama. This multilingual embedding model is state-of-the-art for semantic search and supports Bangla, making it suitable for capturing nuanced meanings in both queries and document chunks. It maps semantically similar texts to nearby points in vector space, enabling effective retrieval.
+A: The embedding model used is `BAAI-BGE-M3` via Ollama. This multilingual embedding model is state-of-the-art for semantic search and supports Bangla (99+ other language as well), making it suitable for capturing nuanced meanings in both queries and document chunks. The vector dimension is `1024`, helping it preserve more context in each chunk. It maps semantically similar texts to nearby points in vector space, enabling effective retrieval.
 
 
 **Q: How are you comparing the query with your stored chunks? Why did you choose this similarity method and storage setup?**
