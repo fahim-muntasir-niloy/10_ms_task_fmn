@@ -3,7 +3,7 @@
 A conversational AI assistant for HSC Bangla First Paper, answering questions using a knowledge base extracted from the official textbook. It have `thread based memory support`, to keep the context of the current chat (short term memory) through out.
 
 **Watch a quick demo of HSC Bangla Bot in action!**
-[![Watch the demo](https://img.youtube.com/vi/3Em5Sq18mjg/0.jpg)](https://www.youtube.com/watch?v=3Em5Sq18mjg)
+[![Watch the demo](https://img.youtube.com/vi/3Em5Sq18mjg/2.jpg)](https://www.youtube.com/watch?v=3Em5Sq18mjg)
 
 ## 🧮 Setup Guide
 
@@ -107,7 +107,8 @@ See `requirements.txt` for full list.
   ```
 
 ## Evaluation (Work in Progress)
-This is a typical run traced in langsmith (`input to output`)
+This is a typical run traced in langsmith (`input to output`).
+[Live Link](https://smith.langchain.com/public/9bded364-fbbf-47f3-8f13-87aa0095162d/r)
 ![Evaluation Tracing Example](images/tracing.png)
 
 ---
@@ -119,27 +120,33 @@ This is a typical run traced in langsmith (`input to output`)
 ## ❓ Q/A: Technical Design & Choices
 
 **Q: What method or library did you use to extract the text, and why? Did you face any formatting challenges with the PDF content?**
+
 A: I used `pytesseract` (OCR) with `Pillow` to extract Bangla text from the PDF. Standard PDF text extraction libraries (like PyMuPDF or pdfplumber) were tried but those failed to extract Bangla text accurately due to font encoding issues. OCR was chosen as it reliably extracts Bangla script from scanned textbook pages, though it introduced some minor formatting artifacts.
 
 
 **Q: What chunking strategy did you choose (e.g. paragraph-based, sentence-based, character limit)? Why do you think it works well for semantic retrieval?**
+
 A: I chose a **character-based chunking** strategy using `RecursiveCharacterTextSplitter` with a chunk size of `800` and an overlap of `400`. This method ensures each chunk retains meaningful context while being small enough for efficient processing. The overlap preserves semantic continuity across chunks, which is especially beneficial for downstream retrieval and generation tasks.
 
 
 **Q: What embedding model did you use? Why did you choose it? How does it capture the meaning of the text?**
+
 A: The embedding model used is `BAAI-BGE-M3` via Ollama. This multilingual embedding model is state-of-the-art for semantic search and supports Bangla, making it suitable for capturing nuanced meanings in both queries and document chunks. It maps semantically similar texts to nearby points in vector space, enabling effective retrieval.
 
 
 **Q: How are you comparing the query with your stored chunks? Why did you choose this similarity method and storage setup?**
+
 A: Queries are embedded using the same model and compared to stored chunk embeddings using vector similarity (cosine similarity) in Supabase PGVector. This setup is scalable, efficient, and integrates well with LangChain for semantic retrieval tasks. 
 
 
 **Q: How do you ensure that the question and the document chunks are compared meaningfully? What would happen if the query is vague or missing context?**
+
 A: Both queries and document chunks are embedded in the same vector space, ensuring meaningful comparison. If a query is vague or lacks context, the retriever may return less relevant or generic chunks. Providing more specific queries generally yields better, more focused answers.
 
 **Q: Do the results seem relevant? If not, what might improve them (e.g. better chunking, better embedding model, larger document)?**
+
 A: The results are generally relevant for well-formed queries. Relevance can be further improved by:
 - Using more advanced or domain-specific embedding models
 - Tuning chunk size/overlap for the specific document
 - Improving OCR quality or post-processing
-- Expanding the knowledge base with more documents
+- Expanding the knowledge base with more documents (If direct text files can be given input, that would be better than OCR processing)
